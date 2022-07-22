@@ -56,17 +56,17 @@ func SaveMedia(m Media) {
 	}
 }
 
-func RemoveMedia(path string) {
+func DeleteMediaByPath(path string) {
 	var m Media
 	err := DB.First(&m, "path = ?", path).Error
 	if err != nil {
-		logger.ErrorLogger.Println("remove media error:", err)
+		logger.ErrorLogger.Println("delete media error:", err)
 	} else {
 		err = DB.Delete(&m).Error
 		if err != nil {
-			logger.ErrorLogger.Println("remove media error:", err)
+			logger.ErrorLogger.Println("delete media error:", err)
 		} else {
-			logger.InfoLogger.Println("remove media: " + path)
+			logger.InfoLogger.Println("delete media: " + path)
 		}
 	}
 }
