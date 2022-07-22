@@ -1,6 +1,7 @@
 package services
 
 import (
+	"github.com/google/uuid"
 	"myPhotos/config"
 	"myPhotos/entity"
 	"myPhotos/third_party/amap"
@@ -32,6 +33,7 @@ func SaveMedia(metadata exiftool.FileMetadata) {
 	}
 
 	// 插入数据库
+	m.ID = uuid.New().String()
 	entity.SaveMedia(m)
 }
 

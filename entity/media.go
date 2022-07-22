@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"github.com/google/uuid"
 	"myPhotos/logger"
 	"time"
 )
@@ -47,7 +46,6 @@ type Media struct {
 }
 
 func SaveMedia(m Media) {
-	m.ID = uuid.New().String()
 	err := DB.Create(&m).Error
 	if err != nil {
 		logger.ErrorLogger.Println("save media error:", err.Error())
