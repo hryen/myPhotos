@@ -40,7 +40,7 @@ func WatchExec() {
 	for _, file := range removedFiles {
 		f := filepath.Join(path, file)
 		f = strings.ReplaceAll(f, "\\", "/")
-		entity.RemoveMedia(f)
+		entity.DeleteMediaByPath(f)
 	}
 }
 
