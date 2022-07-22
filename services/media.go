@@ -27,13 +27,14 @@ func SaveMedia(metadata exiftool.FileMetadata) {
 		m.GPSFormattedAddress = g.FormattedAddress
 	}
 
+	m.ID = uuid.New().String()
+
 	// 生成缩略图，只有动态图片的视频不生成
 	if m.MediaType != entity.LivePhotoVideo {
-		thumbnail.SaveMediaThumbnail(m.Path)
+		thumbnail.SaveMediaThumbnail(&m)
 	}
 
 	// 插入数据库
-	m.ID = uuid.New().String()
 	entity.SaveMedia(m)
 }
 

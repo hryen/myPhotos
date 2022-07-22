@@ -12,7 +12,6 @@ import (
 	"net/http"
 	"path/filepath"
 	"strconv"
-	"strings"
 )
 
 // ListMedia 分页返回 Media，按时间排序，排除动态图片的视频
@@ -57,9 +56,7 @@ func doGetMedia(w http.ResponseWriter, r *http.Request, isThumbnail bool) {
 	}
 
 	if isThumbnail {
-		dir := filepath.Dir(m.Path)
-		dir = strings.ReplaceAll(dir, "\\", "/")
-		m.Path = strings.Replace(m.Path, dir, config.ThumbnailPath, 1) + ".thumbnail.jpg"
+		m.Path = filepath.Join(config.ThumbnailPath, m.ID+".jpg")
 	}
 	// 缓存30天
 	//w.Header().Set("Cache-Control", "max-age=2592000")
