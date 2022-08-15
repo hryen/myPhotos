@@ -27,6 +27,6 @@ func main() {
 func printUsage() {
 	fmt.Println("USAGE:")
 	fmt.Println("  myPhotos server              start web server")
-	fmt.Println("  myPhotos scan DIR [-g]         scan dir and save to database")
+	fmt.Println("  myPhotos scan DIR [-g]       scan dir and save to database")
 	fmt.Println("                               -g: get geography info(use AMap api)")
 }
