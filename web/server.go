@@ -17,13 +17,13 @@ var static embed.FS
 func StartServer() {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/medias", api.ListMedia).Methods("GET")
-	r.HandleFunc("/api/medias/count", api.GetMediaCount).Methods("GET")
-	r.HandleFunc("/api/medias/search", api.SearchMedia).Methods("GET")
-	r.HandleFunc("/api/medias/{id}", api.GetMedia).Methods("GET")
-	r.HandleFunc("/api/medias/{id}/thumbnail", api.GetMediaThumbnail).Methods("GET")
-	r.HandleFunc("/api/medias/{id}/video", api.GetLivePhotoVideo).Methods("GET")
-	r.HandleFunc("/api/medias/{id}/info", api.GetMediaInfo).Methods("GET")
+	r.HandleFunc("/api/medias", api.ListMedia).Methods(http.MethodGet)
+	r.HandleFunc("/api/medias/count", api.GetMediaCount).Methods(http.MethodGet)
+	r.HandleFunc("/api/medias/search", api.SearchMedia).Methods(http.MethodGet)
+	r.HandleFunc("/api/medias/{id}", api.GetMedia).Methods(http.MethodGet)
+	r.HandleFunc("/api/medias/{id}/thumbnail", api.GetMediaThumbnail).Methods(http.MethodGet)
+	r.HandleFunc("/api/medias/{id}/video", api.GetLivePhotoVideo).Methods(http.MethodGet)
+	r.HandleFunc("/api/medias/{id}/info", api.GetMediaInfo).Methods(http.MethodGet)
 
 	// frontend
 	staticFS, _ := fs.Sub(static, "static")
