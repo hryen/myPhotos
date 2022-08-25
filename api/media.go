@@ -3,13 +3,18 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	"gorm.io/gorm"
+	"io"
+	"mime/multipart"
 	"myPhotos/config"
 	"myPhotos/entity"
 	"myPhotos/logger"
 	"myPhotos/models"
 	"net/http"
+	"os"
+	"path"
 	"path/filepath"
 	"strconv"
 )
@@ -203,4 +208,47 @@ func paginate(r *http.Request) func(db *gorm.DB) *gorm.DB {
 		offset := (page - 1) * pageSize
 		return db.Offset(offset).Limit(pageSize)
 	}
+}
+
+func UploadFile(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	if r.Method == http.MethodOptions {
+		return
+	}
+
+	// 128 MiB
+	err := r.ParseMultipartForm(128 << 20)
+	if err != nil {
+		writeJSON(w, models.NewApiResponse(false, "failed to upload file: "+err.Error(), nil))
+	}
+
+	file, handler, err := r.FormFile("file")
+	defer func(file multipart.File) {
+		_ = file.Close()
+	}(file)
+
+	if err != nil {
+		writeJSON(w, models.NewApiResponse(false, "failed to upload file: "+err.Error(), nil))
+		return
+	}
+	logger.InfoLogger.Printf("Uploaded File: %+v\n", handler.Filename)
+	logger.InfoLogger.Printf("File Size: %+v\n", handler.Size)
+	logger.InfoLogger.Printf("MIME Header: %+v\n", handler.Header)
+
+	dst, err := os.Create(path.Join("uploads", uuid.New().String()+filepath.Ext(handler.Filename)))
+	defer func(dst *os.File) {
+		_ = dst.Close()
+	}(dst)
+
+	if err != nil {
+		writeJSON(w, models.NewApiResponse(false, "failed to upload file: "+err.Error(), nil))
+		return
+	}
+
+	if _, err := io.Copy(dst, file); err != nil {
+		writeJSON(w, models.NewApiResponse(false, "failed to upload file: "+err.Error(), nil))
+		return
+	}
+
+	writeJSON(w, models.NewApiResponse(true, "Successfully Uploaded File", nil))
 }

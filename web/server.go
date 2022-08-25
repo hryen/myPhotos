@@ -13,6 +13,7 @@ func StartServer() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/api/medias", api.ListMedia).Methods(http.MethodGet)
+	r.HandleFunc("/api/medias", api.UploadFile).Methods(http.MethodPost, http.MethodOptions)
 	r.HandleFunc("/api/medias/count", api.GetMediaCount).Methods(http.MethodGet)
 	r.HandleFunc("/api/medias/search", api.SearchMedia).Methods(http.MethodGet)
 	r.HandleFunc("/api/medias/{id}", api.GetMedia).Methods(http.MethodGet)
