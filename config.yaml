@@ -1,4 +1,4 @@
-# 保存照片和视频缩略图的路径
+# 保存缩略图、数据库等文件的路径
 DataPath: "./data"
 
 # 是否通过高德地图 api 获取地理位置, 如果 AMapKey 为空，则程序会自动将该值设为 false
@@ -17,4 +17,4 @@ VideoExtList: [".mp4", ".mov"]
 HTTPAddr: 127.0.0.1
 
 # Web 服务监听的端口号
-HTTPPort: 80
+HTTPPort: 3030
