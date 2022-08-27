@@ -66,7 +66,7 @@ func init() {
 
 	// 创建缩略图目录
 	if s, err := os.Stat(ThumbnailPath); os.IsNotExist(err) {
-		err := os.Mkdir(ThumbnailPath, os.ModeDir)
+		err := os.MkdirAll(ThumbnailPath, os.ModeDir)
 		if err != nil {
 			logger.ErrorLogger.Println("failed to create thumbnail directory", err)
 			os.Exit(1)
