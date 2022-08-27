@@ -6,7 +6,6 @@ import (
 	"myPhotos/logger"
 	"myPhotos/services"
 	"myPhotos/third_party/exiftool"
-	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -21,15 +20,9 @@ func StartScan(dir string) {
 		return
 	}
 
-	et, err := exiftool.NewExiftool()
-	if err != nil {
-		logger.ErrorLogger.Println(err)
-		os.Exit(1)
-	}
-	defer et.Close()
-
+	defer exiftool.Et.Close()
 	for _, file := range files {
-		fm := et.ExtractMetadata(file)
+		fm := exiftool.Et.ExtractMetadata(file)
 		services.SaveMedia(fm)
 	}
 
