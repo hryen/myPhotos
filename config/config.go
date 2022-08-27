@@ -8,6 +8,9 @@ import (
 	"time"
 )
 
+// DataPath 数据存放路径，包含缩略图、数据库等文件
+var DataPath string
+
 // ThumbnailPath 保存照片和视频缩略图的路径
 var ThumbnailPath string
 
@@ -49,7 +52,8 @@ func init() {
 		os.Exit(1)
 	}
 
-	ThumbnailPath = viper.GetString("ThumbnailPath")
+	DataPath = viper.GetString("DataPath")
+	ThumbnailPath = filepath.Join(DataPath, "thumbnails")
 	GPSToGeo = viper.GetBool("GPSToGeo")
 	AMapKey = viper.GetString("AMapKey")
 	if AMapKey == "" {

@@ -1,5 +1,5 @@
 # 保存照片和视频缩略图的路径
-ThumbnailPath: "./thumbnails"
+DataPath: "./data"
 
 # 是否通过高德地图 api 获取地理位置, 如果 AMapKey 为空，则程序会自动将该值设为 false
 GPSToGeo: true

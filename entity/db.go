@@ -4,21 +4,14 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
-	"myPhotos/logger"
-	"os"
+	"myPhotos/config"
 	"path/filepath"
 )
 
 var DB *gorm.DB
 
 func init() {
-	path, err := os.Executable()
-	if err != nil {
-		logger.ErrorLogger.Println(err)
-		os.Exit(1)
-	}
-
-	db, _ := gorm.Open(sqlite.Open(filepath.Join(filepath.Dir(path), "data.db")), &gorm.Config{
+	db, _ := gorm.Open(sqlite.Open(filepath.Join(config.DataPath, "data.db")), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
