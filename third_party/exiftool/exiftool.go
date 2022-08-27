@@ -13,11 +13,23 @@ import (
 	"io"
 	"myPhotos/logger"
 	"myPhotos/tools"
+	"os"
 	"os/exec"
 	"strconv"
 	"sync"
 	"time"
 )
+
+var Et *Exiftool
+
+func init() {
+	et, err := NewExiftool()
+	if err != nil {
+		logger.ErrorLogger.Println(err)
+		os.Exit(1)
+	}
+	Et = et
+}
 
 var exiftoolBinary = "exiftool"
 var executeArg = "-execute"

@@ -12,9 +12,10 @@ import (
 	"myPhotos/entity"
 	"myPhotos/logger"
 	"myPhotos/models"
+	"myPhotos/services"
+	"myPhotos/third_party/exiftool"
 	"net/http"
 	"os"
-	"path"
 	"path/filepath"
 	"strconv"
 )
@@ -231,11 +232,12 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, models.NewApiResponse(false, "failed to upload file: "+err.Error(), nil))
 		return
 	}
-	logger.InfoLogger.Printf("Uploaded File: %+v\n", handler.Filename)
-	logger.InfoLogger.Printf("File Size: %+v\n", handler.Size)
-	logger.InfoLogger.Printf("MIME Header: %+v\n", handler.Header)
+	//logger.InfoLogger.Printf("Uploaded File: %+v\n", handler.Filename)
+	//logger.InfoLogger.Printf("File Size: %+v\n", handler.Size)
+	//logger.InfoLogger.Printf("MIME Header: %+v\n", handler.Header)
 
-	dst, err := os.Create(path.Join("uploads", uuid.New().String()+filepath.Ext(handler.Filename)))
+	dstPath := filepath.Join(config.UploadPath, uuid.New().String()+filepath.Ext(handler.Filename))
+	dst, err := os.Create(dstPath)
 	defer func(dst *os.File) {
 		_ = dst.Close()
 	}(dst)
@@ -249,6 +251,10 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, models.NewApiResponse(false, "failed to upload file: "+err.Error(), nil))
 		return
 	}
+
+	// save to db
+	fm := exiftool.Et.ExtractMetadata(dstPath)
+	services.SaveMedia(fm)
 
 	writeJSON(w, models.NewApiResponse(true, "Successfully Uploaded File", nil))
 }

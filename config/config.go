@@ -14,6 +14,9 @@ var DataPath string
 // ThumbnailPath 保存照片和视频缩略图的路径
 var ThumbnailPath string
 
+// UploadPath 保存上传的照片和视频的路径
+var UploadPath string
+
 // GPSToGeo 是否开启通过 GPS 经纬度数据使用高德地图 api 反查地理位置
 var GPSToGeo bool
 
@@ -54,6 +57,7 @@ func init() {
 
 	DataPath = viper.GetString("DataPath")
 	ThumbnailPath = filepath.Join(DataPath, "thumbnails")
+	UploadPath = filepath.Join(DataPath, "uploads")
 	GPSToGeo = viper.GetBool("GPSToGeo")
 	AMapKey = viper.GetString("AMapKey")
 	if AMapKey == "" {
@@ -74,6 +78,20 @@ func init() {
 	} else {
 		if !s.IsDir() {
 			logger.ErrorLogger.Println("failed to create thumbnail directory, file is exist but is not directory.")
+			os.Exit(1)
+		}
+	}
+
+	// 创建上传目录
+	if s, err := os.Stat(UploadPath); os.IsNotExist(err) {
+		err := os.MkdirAll(UploadPath, os.ModeDir)
+		if err != nil {
+			logger.ErrorLogger.Println("failed to create upload directory", err)
+			os.Exit(1)
+		}
+	} else {
+		if !s.IsDir() {
+			logger.ErrorLogger.Println("failed to create upload directory, file is exist but is not directory.")
 			os.Exit(1)
 		}
 	}
