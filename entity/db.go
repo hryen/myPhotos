@@ -5,12 +5,14 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 	"myPhotos/config"
+	"myPhotos/logger"
 	"path/filepath"
 )
 
 var DB *gorm.DB
 
 func init() {
+	logger.InfoLogger.Println("db init...")
 	db, _ := gorm.Open(sqlite.Open(filepath.Join(config.DataPath, "data.db")), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,

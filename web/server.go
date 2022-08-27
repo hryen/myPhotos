@@ -10,6 +10,7 @@ import (
 )
 
 func StartServer() {
+	logger.InfoLogger.Println("web server init...")
 	r := mux.NewRouter()
 
 	r.HandleFunc("/api/medias", api.ListMedia).Methods(http.MethodGet)
