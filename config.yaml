@@ -4,7 +4,7 @@ DataPath: "./data"
 # 是否通过高德地图 api 获取地理位置, 如果 AMapKey 为空，则程序会自动将该值设为 false
 GPSToGeo: true
 
-#  高德地图 key
+# 高德地图 key, 服务平台：Web服务
 AMapKey: ""
 
 # 照片的扩展名列表，小写
