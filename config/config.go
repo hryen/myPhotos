@@ -38,7 +38,7 @@ var HTTPAddr string
 // HTTPPort web服务监听端口
 var HTTPPort string
 
-func init() {
+func InitializeConfig() {
 	// 读取配置文件
 	path, err := os.Executable()
 	if err != nil {

@@ -28,6 +28,7 @@ func main() {
 
 	entity.InitializeDatabase()
 	exiftool.InitializeExiftool()
+	config.InitializeConfig()
 
 	if os.Args[1] == "server" {
 		web.StartServer()
