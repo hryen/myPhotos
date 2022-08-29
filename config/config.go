@@ -40,16 +40,10 @@ var HTTPPort string
 
 func InitializeConfig() {
 	// 读取配置文件
-	path, err := os.Executable()
-	if err != nil {
-		logger.ErrorLogger.Println(err)
-		os.Exit(1)
-	}
-
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath(filepath.Dir(path))
-	err = viper.ReadInConfig()
+	viper.AddConfigPath(".")
+	err := viper.ReadInConfig()
 	if err != nil {
 		logger.ErrorLogger.Printf("fatal error config file: %w", err)
 		os.Exit(1)
