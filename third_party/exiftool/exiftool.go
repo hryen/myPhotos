@@ -42,7 +42,7 @@ var args = []string{"-stay_open", "True", "-@", "-",
 var closeArgs = []string{"-stay_open", "False", executeArg}
 
 var waitTimeout = time.Second
-var readyToken = []byte("{ready}\r\n")
+
 var readyTokenLen = len(readyToken)
 
 type Exiftool struct {
