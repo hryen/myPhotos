@@ -7,9 +7,19 @@ import (
 	"myPhotos/logger"
 	"net/http"
 	"os"
+	"os/exec"
 )
 
 func StartServer() {
+	if _, err := exec.LookPath("exiftool"); err != nil {
+		logger.ErrorLogger.Println("exiftool not found, you can download it from https://exiftool.org")
+		os.Exit(1)
+	}
+	if _, err := exec.LookPath("ffmpeg"); err != nil {
+		logger.ErrorLogger.Println("ffmpeg not found, you can download it from https://ffmpeg.org")
+		os.Exit(1)
+	}
+
 	logger.InfoLogger.Println("web server init...")
 	r := mux.NewRouter()
 
