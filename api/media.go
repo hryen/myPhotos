@@ -18,6 +18,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"time"
 )
 
 // ListMedia 分页返回 Media，按时间排序，排除动态图片的视频
@@ -248,6 +249,20 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if _, err := io.Copy(dst, file); err != nil {
+		writeJSON(w, models.NewApiResponse(false, "failed to upload file: "+err.Error(), nil))
+		return
+	}
+
+	lastModified := r.Form["lastModified"][0][0:10]
+	sec, err := strconv.ParseInt(lastModified, 10, 64)
+	if err != nil {
+		writeJSON(w, models.NewApiResponse(false, "failed to upload file: "+err.Error(), nil))
+		return
+	}
+	modTime := time.Unix(sec, 0)
+
+	err = os.Chtimes(dstPath, modTime, modTime)
+	if err != nil {
 		writeJSON(w, models.NewApiResponse(false, "failed to upload file: "+err.Error(), nil))
 		return
 	}
