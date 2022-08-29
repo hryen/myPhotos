@@ -8,11 +8,21 @@ import (
 	"myPhotos/third_party/exiftool"
 	"myPhotos/web"
 	"os"
+	"os/exec"
 )
 
 func main() {
 	if len(os.Args) == 1 {
 		printUsage()
+		os.Exit(1)
+	}
+
+	if _, err := exec.LookPath("exiftool"); err != nil {
+		fmt.Println("exiftool not found, you can download it from https://exiftool.org")
+		os.Exit(1)
+	}
+	if _, err := exec.LookPath("ffmpeg"); err != nil {
+		fmt.Println("ffmpeg not found, you can download it from https://ffmpeg.org")
 		os.Exit(1)
 	}
 
