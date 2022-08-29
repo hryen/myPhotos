@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"myPhotos/config"
+	"myPhotos/entity"
 	"myPhotos/scanner"
 	"myPhotos/web"
 	"os"
@@ -13,6 +14,9 @@ func main() {
 		printUsage()
 		os.Exit(1)
 	}
+
+	entity.InitializeDatabase()
+
 	if os.Args[1] == "server" {
 		web.StartServer()
 	} else if os.Args[1] == "scan" {

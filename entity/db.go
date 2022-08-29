@@ -6,14 +6,15 @@ import (
 	"gorm.io/gorm/schema"
 	"myPhotos/config"
 	"myPhotos/logger"
+	"os"
 	"path/filepath"
 )
 
 var DB *gorm.DB
 
-func init() {
+func InitializeDatabase() {
 	logger.InfoLogger.Println("db init...")
-	db, _ := gorm.Open(sqlite.Open(filepath.Join(config.DataPath, "data.db")), &gorm.Config{
+	db, err := gorm.Open(sqlite.Open(filepath.Join(config.DataPath, "data.db")), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
@@ -21,8 +22,16 @@ func init() {
 		PrepareStmt:            true,
 		SkipDefaultTransaction: true,
 	})
+	if err != nil {
+		logger.ErrorLogger.Println("gorm initialize error", err)
+		os.Exit(1)
+	}
 
-	_ = db.AutoMigrate(Media{})
+	err = db.AutoMigrate(Media{})
+	if err != nil {
+		logger.ErrorLogger.Println("gorm migration error", err)
+		os.Exit(1)
+	}
 
 	DB = db
 }
