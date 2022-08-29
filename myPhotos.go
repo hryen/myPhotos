@@ -5,6 +5,7 @@ import (
 	"myPhotos/config"
 	"myPhotos/entity"
 	"myPhotos/scanner"
+	"myPhotos/third_party/exiftool"
 	"myPhotos/web"
 	"os"
 )
@@ -16,6 +17,7 @@ func main() {
 	}
 
 	entity.InitializeDatabase()
+	exiftool.InitializeExiftool()
 
 	if os.Args[1] == "server" {
 		web.StartServer()

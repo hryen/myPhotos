@@ -22,7 +22,7 @@ import (
 
 var Et *Exiftool
 
-func init() {
+func InitializeExiftool() {
 	et, err := NewExiftool()
 	if err != nil {
 		logger.ErrorLogger.Println(err)
