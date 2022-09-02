@@ -34,5 +34,5 @@ func main() {
 	entity.InitializeDatabase()
 	exiftool.InitializeExiftool()
 
-	web.Serve()
+	web.StartServer()
 }
