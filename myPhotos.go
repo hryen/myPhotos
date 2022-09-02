@@ -62,7 +62,13 @@ func main() {
 
 func terminate() {
 	logger.InfoLogger.Println("terminating...")
-	err := entity.Close()
+
+	err := exiftool.Et.Close()
+	if err != nil {
+		logger.ErrorLogger.Println("close exiftool error:", err)
+	}
+
+	err = entity.Close()
 	if err != nil {
 		logger.ErrorLogger.Println("close database error:", err)
 	}
