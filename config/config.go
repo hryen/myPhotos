@@ -8,35 +8,37 @@ import (
 	"time"
 )
 
-// DataPath 数据存放路径，包含缩略图、数据库等文件
-var DataPath string
+var (
+	// DataPath 数据存放路径，包含缩略图、数据库等文件
+	DataPath string
 
-// ThumbnailPath 保存照片和视频缩略图的路径
-var ThumbnailPath string
+	// ThumbnailPath 保存照片和视频缩略图的路径
+	ThumbnailPath string
 
-// UploadPath 保存上传的照片和视频的路径
-var UploadPath string
+	// UploadPath 保存上传的照片和视频的路径
+	UploadPath string
 
-// GPSToGeo 是否开启通过 GPS 经纬度数据使用高德地图 api 反查地理位置
-var GPSToGeo bool
+	// GPSToGeo 是否开启通过 GPS 经纬度数据使用高德地图 api 反查地理位置
+	GPSToGeo bool
 
-// AMapKey 高德地图 key
-var AMapKey string
+	// AMapKey 高德地图 key
+	AMapKey string
 
-// PhotoExtList 照片的扩展名列表，小写
-var PhotoExtList []string
+	// PhotoExtList 照片的扩展名列表，小写
+	PhotoExtList []string
 
-// VideoExtList 视频的扩展名列表，小写
-var VideoExtList []string
+	// VideoExtList 视频的扩展名列表，小写
+	VideoExtList []string
 
-// Location 时区
-var Location *time.Location
+	// Location 时区
+	Location *time.Location
 
-// HTTPAddr web服务监听地址
-var HTTPAddr string
+	// HTTPAddr web服务监听地址
+	HTTPAddr string
 
-// HTTPPort web服务监听端口
-var HTTPPort string
+	// HTTPPort web服务监听端口
+	HTTPPort string
+)
 
 func InitializeConfig(path string) {
 	DataPath = path
