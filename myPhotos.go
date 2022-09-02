@@ -4,10 +4,14 @@ import (
 	"fmt"
 	"myPhotos/config"
 	"myPhotos/entity"
+	"myPhotos/logger"
 	"myPhotos/third_party/exiftool"
 	"myPhotos/web"
 	"os"
 	"os/exec"
+	"os/signal"
+	"sync"
+	"syscall"
 )
 
 func main() {
@@ -30,9 +34,35 @@ func main() {
 		os.Exit(1)
 	}
 
-	config.InitializeConfig(os.Args[1])
-	entity.InitializeDatabase()
-	exiftool.InitializeExiftool()
+	// 优雅的结束程序
+	var wg sync.WaitGroup
+	wg.Add(1)
 
-	web.StartServer()
+	go func() {
+		defer wg.Done()
+		quit := make(chan os.Signal, 1)
+		signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
+		<-quit
+	}()
+
+	go func() {
+		defer wg.Done()
+
+		config.InitializeConfig(os.Args[1])
+		entity.InitializeDatabase()
+		exiftool.InitializeExiftool()
+
+		web.StartServer()
+	}()
+
+	wg.Wait()
+
+	terminate()
+}
+
+func terminate() {
+	err := entity.Close()
+	if err != nil {
+		logger.ErrorLogger.Println("close database error:", err)
+	}
 }
