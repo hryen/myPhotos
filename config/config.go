@@ -67,7 +67,7 @@ func InitializeConfig(path string) {
 
 	// 创建缩略图目录
 	if s, err := os.Stat(ThumbnailPath); os.IsNotExist(err) {
-		err := os.MkdirAll(ThumbnailPath, os.ModeDir)
+		err := os.MkdirAll(ThumbnailPath, 0755)
 		if err != nil {
 			logger.ErrorLogger.Println("failed to create thumbnail directory", err)
 			os.Exit(1)
@@ -81,7 +81,7 @@ func InitializeConfig(path string) {
 
 	// 创建上传目录
 	if s, err := os.Stat(UploadPath); os.IsNotExist(err) {
-		err := os.MkdirAll(UploadPath, os.ModeDir)
+		err := os.MkdirAll(UploadPath, 0755)
 		if err != nil {
 			logger.ErrorLogger.Println("failed to create upload directory", err)
 			os.Exit(1)
