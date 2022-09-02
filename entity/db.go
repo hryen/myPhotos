@@ -8,7 +8,6 @@ import (
 	"myPhotos/logger"
 	"os"
 	"path/filepath"
-	"time"
 )
 
 var DB *gorm.DB
@@ -39,9 +38,9 @@ func InitializeDatabase() {
 		logger.ErrorLogger.Println("gorm get db error", err)
 		os.Exit(1)
 	}
-	sqlDB.SetMaxIdleConns(6)
-	sqlDB.SetMaxOpenConns(60)
-	sqlDB.SetConnMaxLifetime(time.Hour)
+
+	// 为了防止 database is locked (5) (SQLITE_BUSY)
+	sqlDB.SetMaxOpenConns(1)
 
 	DB = db
 }
