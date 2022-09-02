@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"myPhotos/config"
 	"myPhotos/entity"
-	"myPhotos/scanner"
 	"myPhotos/third_party/exiftool"
 	"myPhotos/web"
 	"os"
@@ -12,8 +11,13 @@ import (
 )
 
 func main() {
-	if len(os.Args) == 1 {
-		printUsage()
+	if len(os.Args) != 2 {
+		fmt.Println("USAGE: myPhotos [CONFIG AND DATA DIRECTORY]")
+		os.Exit(1)
+	}
+
+	if l, err := os.Lstat(os.Args[1]); err != nil || !l.IsDir() {
+		fmt.Println("the dir is not exist or is not a directory")
 		os.Exit(1)
 	}
 
@@ -30,20 +34,5 @@ func main() {
 	entity.InitializeDatabase()
 	exiftool.InitializeExiftool()
 
-	if os.Args[1] == "server" {
-		web.StartServer()
-	} else if os.Args[1] == "scan" {
-		config.GPSToGeo = false
-		if len(os.Args) == 4 && os.Args[3] == "-g" && config.AMapKey != "" {
-			config.GPSToGeo = true
-		}
-		scanner.StartScan(os.Args[2])
-	}
-}
-
-func printUsage() {
-	fmt.Println("USAGE:")
-	fmt.Println("  myPhotos server              start web server")
-	fmt.Println("  myPhotos scan DIR [-g]       scan dir and save to database")
-	fmt.Println("                               -g: get geography info(use AMap api)")
+	web.StartServer()
 }
