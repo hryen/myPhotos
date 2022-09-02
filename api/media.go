@@ -237,7 +237,8 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	//logger.InfoLogger.Printf("File Size: %+v\n", handler.Size)
 	//logger.InfoLogger.Printf("MIME Header: %+v\n", handler.Header)
 
-	dstPath := filepath.Join(config.UploadPath, uuid.New().String()+filepath.Ext(handler.Filename))
+	id := uuid.New().String()
+	dstPath := filepath.Join(config.UploadPath, id+filepath.Ext(handler.Filename))
 	dst, err := os.Create(dstPath)
 	defer func(dst *os.File) {
 		_ = dst.Close()
@@ -269,7 +270,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 
 	// save to db
 	fm := exiftool.Et.ExtractMetadata(dstPath)
-	services.SaveMedia(fm)
+	services.SaveMedia(fm, id)
 
 	writeJSON(w, models.NewApiResponse(true, "Successfully Uploaded File", nil))
 }

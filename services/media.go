@@ -1,7 +1,6 @@
 package services
 
 import (
-	"github.com/google/uuid"
 	"myPhotos/config"
 	"myPhotos/entity"
 	"myPhotos/third_party/amap"
@@ -14,7 +13,7 @@ import (
 	"time"
 )
 
-func SaveMedia(metadata exiftool.FileMetadata) {
+func SaveMedia(metadata exiftool.FileMetadata, id string) {
 	m := convertToMedia(metadata)
 
 	// 获取地理位置
@@ -27,7 +26,7 @@ func SaveMedia(metadata exiftool.FileMetadata) {
 		m.GPSFormattedAddress = g.FormattedAddress
 	}
 
-	m.ID = uuid.New().String()
+	m.ID = id
 
 	// 生成缩略图，只有动态图片的视频不生成
 	if m.MediaType != entity.LivePhotoVideo {
