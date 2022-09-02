@@ -41,12 +41,12 @@ var (
 )
 
 func InitializeConfig(path string) {
-	DataPath = path
+	DataPath = filepath.Join(path, "data")
 
 	// 读取配置文件
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath(DataPath)
+	viper.AddConfigPath(path)
 	err := viper.ReadInConfig()
 	if err != nil {
 		logger.ErrorLogger.Println("fatal error config file:", err)
