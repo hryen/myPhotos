@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-func StartServer() {
+func Serve() {
 	logger.InfoLogger.Println("web server init...")
 	r := mux.NewRouter()
 
