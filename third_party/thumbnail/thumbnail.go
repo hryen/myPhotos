@@ -30,6 +30,7 @@ func SaveMediaThumbnail(m *entity.Media) {
 	}
 }
 
+// TODO 现在是启动了命令但不等待它完成
 func doSaveMediaThumbnail(arg []string) {
 	cmd := exec.Command("ffmpeg", arg...)
 	err := cmd.Start()
