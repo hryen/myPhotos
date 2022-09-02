@@ -12,6 +12,8 @@ import (
 	"time"
 )
 
+// TODO deprecated
+
 func StartScan(dir string) {
 	defer timeCost(time.Now())
 
