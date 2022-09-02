@@ -1,0 +1,12 @@
+[Unit]
+Description=My Photos
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/local/myPhotos/myPhotos /usr/local/myPhotos
+WorkingDirectory=/usr/local/myPhotos
+
+[Install]
+WantedBy=multi-user.target
