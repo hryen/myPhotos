@@ -24,8 +24,9 @@ func StartServer() {
 
 	r.Use(mux.CORSMethodMiddleware(r))
 
-	logger.InfoLogger.Println("About to listen on " + config.HTTPPort + ", Go to http://" + config.HTTPAddr)
-	err := http.ListenAndServe(config.HTTPAddr+":"+config.HTTPPort, r)
+	addr := config.HTTPAddr + ":" + config.HTTPPort
+	logger.InfoLogger.Printf("Server started at: http://%s\n", addr)
+	err := http.ListenAndServe(addr, r)
 	if err != nil {
 		logger.ErrorLogger.Println(err)
 		os.Exit(1)
