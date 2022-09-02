@@ -8,6 +8,7 @@ import (
 	"myPhotos/logger"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 var DB *gorm.DB
@@ -32,6 +33,15 @@ func InitializeDatabase() {
 		logger.ErrorLogger.Println("gorm migration error", err)
 		os.Exit(1)
 	}
+
+	sqlDB, err := db.DB()
+	if err != nil {
+		logger.ErrorLogger.Println("gorm get db error", err)
+		os.Exit(1)
+	}
+	sqlDB.SetMaxIdleConns(6)
+	sqlDB.SetMaxOpenConns(60)
+	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	DB = db
 }
