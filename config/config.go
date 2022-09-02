@@ -38,18 +38,19 @@ var HTTPAddr string
 // HTTPPort web服务监听端口
 var HTTPPort string
 
-func InitializeConfig() {
+func InitializeConfig(path string) {
+	DataPath = path
+
 	// 读取配置文件
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath(".")
+	viper.AddConfigPath(DataPath)
 	err := viper.ReadInConfig()
 	if err != nil {
-		logger.ErrorLogger.Printf("fatal error config file: %w", err)
+		logger.ErrorLogger.Println("fatal error config file:", err)
 		os.Exit(1)
 	}
 
-	DataPath = viper.GetString("DataPath")
 	ThumbnailPath = filepath.Join(DataPath, "thumbnails")
 	UploadPath = filepath.Join(DataPath, "uploads")
 	GPSToGeo = viper.GetBool("GPSToGeo")

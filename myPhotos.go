@@ -30,7 +30,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	config.InitializeConfig()
+	config.InitializeConfig(os.Args[1])
 	entity.InitializeDatabase()
 	exiftool.InitializeExiftool()
 
