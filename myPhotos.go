@@ -21,7 +21,7 @@ func main() {
 	}
 
 	if l, err := os.Lstat(os.Args[1]); err != nil || !l.IsDir() {
-		fmt.Println("the dir is not exist or is not a directory")
+		fmt.Println("the directory is not exist or is not a directory")
 		os.Exit(1)
 	}
 
