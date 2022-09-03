@@ -14,7 +14,7 @@ var DB *gorm.DB
 
 func InitializeDatabase() {
 	logger.InfoLogger.Println("db init...")
-	db, err := gorm.Open(sqlite.Open(filepath.Join(config.DataPath, "data.db")), &gorm.Config{
+	db, err := gorm.Open(sqlite.Open(filepath.Join(config.DataPath, "data.db:locked.sqlite?cache=shared")), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
@@ -39,7 +39,7 @@ func InitializeDatabase() {
 		os.Exit(1)
 	}
 
-	// 为了防止 database is locked (5) (SQLITE_BUSY)
+	// 为了防止 Error: database is locked
 	sqlDB.SetMaxOpenConns(1)
 
 	DB = db
