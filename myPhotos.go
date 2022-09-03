@@ -45,6 +45,7 @@ func main() {
 		<-quit
 	}()
 
+	// 启动程序
 	go func() {
 		defer wg.Done()
 
@@ -63,13 +64,15 @@ func main() {
 func terminate() {
 	logger.InfoLogger.Println("terminating...")
 
-	err := exiftool.Et.Close()
+	err := entity.Close()
+	if err != nil {
+		logger.ErrorLogger.Println("close database error:", err)
+	}
+	logger.InfoLogger.Println("closed database")
+
+	err = exiftool.Et.Close()
 	if err != nil {
 		logger.ErrorLogger.Println("close exiftool error:", err)
 	}
 
-	err = entity.Close()
-	if err != nil {
-		logger.ErrorLogger.Println("close database error:", err)
-	}
 }
