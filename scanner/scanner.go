@@ -1,7 +1,7 @@
 package scanner
 
 import (
-	"github.com/google/uuid"
+	"github.com/rs/xid"
 	"io/fs"
 	"myPhotos/config"
 	"myPhotos/logger"
@@ -26,7 +26,7 @@ func StartScan(dir string) {
 	defer exiftool.Et.Close()
 	for _, file := range files {
 		fm := exiftool.Et.ExtractMetadata(file)
-		services.SaveMedia(fm, uuid.New().String())
+		services.SaveMedia(fm, xid.New().String())
 	}
 
 	logger.InfoLogger.Println("Scanned", len(files), "files")

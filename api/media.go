@@ -3,8 +3,8 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/google/uuid"
 	"github.com/gorilla/mux"
+	"github.com/rs/xid"
 	"gorm.io/gorm"
 	"io"
 	"mime/multipart"
@@ -237,7 +237,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	//logger.InfoLogger.Printf("File Size: %+v\n", handler.Size)
 	//logger.InfoLogger.Printf("MIME Header: %+v\n", handler.Header)
 
-	id := uuid.New().String()
+	id := xid.New().String()
 	dstPath := filepath.Join(config.UploadPath, id+filepath.Ext(handler.Filename))
 	dst, err := os.Create(dstPath)
 	defer func(dst *os.File) {
