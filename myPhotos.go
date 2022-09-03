@@ -70,6 +70,8 @@ func terminate() {
 	}
 	logger.InfoLogger.Println("closed database")
 
+	// TODO
+	// close exiftool error: error while closing exiftool: [error while waiting for exiftool to exit: exit status 0xc000013a]
 	err = exiftool.Et.Close()
 	if err != nil {
 		logger.ErrorLogger.Println("close exiftool error:", err)
