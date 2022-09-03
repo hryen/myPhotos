@@ -1,3 +1,6 @@
+# mysql/mariadb 数据库连接地址，例如：user:pass@tcp(127.0.0.1:3306)/myphotos?charset=utf8mb4&parseTime=True&loc=Local
+DataSourceName: ""
+
 # 是否通过高德地图 api 获取地理位置, 如果 AMapKey 为空，则程序会自动将该值设为 false
 GPSToGeo: true
 

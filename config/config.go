@@ -9,6 +9,9 @@ import (
 )
 
 var (
+	// DataSourceName 数据库连接字符串
+	DataSourceName string
+
 	// DataPath 数据存放路径，包含缩略图、数据库等文件
 	DataPath string
 
@@ -53,6 +56,7 @@ func InitializeConfig(path string) {
 		os.Exit(1)
 	}
 
+	DataSourceName = viper.GetString("DataSourceName")
 	ThumbnailPath = filepath.Join(DataPath, "thumbnails")
 	UploadPath = filepath.Join(DataPath, "uploads")
 	GPSToGeo = viper.GetBool("GPSToGeo")

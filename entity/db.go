@@ -1,20 +1,20 @@
 package entity
 
 import (
-	"github.com/glebarez/sqlite"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 	"myPhotos/config"
 	"myPhotos/logger"
 	"os"
-	"path/filepath"
+	"time"
 )
 
 var DB *gorm.DB
 
 func InitializeDatabase() {
 	logger.InfoLogger.Println("db init...")
-	db, err := gorm.Open(sqlite.Open(filepath.Join(config.DataPath, "data.db:locked.sqlite?cache=shared")), &gorm.Config{
+	db, err := gorm.Open(mysql.Open(config.DataSourceName), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
@@ -39,8 +39,10 @@ func InitializeDatabase() {
 		os.Exit(1)
 	}
 
-	// 为了防止 Error: database is locked
-	sqlDB.SetMaxOpenConns(1)
+	sqlDB.SetMaxIdleConns(10)
+	sqlDB.SetMaxOpenConns(100)
+	sqlDB.SetConnMaxIdleTime(time.Hour)
+	sqlDB.SetConnMaxLifetime(24 * time.Hour)
 
 	DB = db
 }
