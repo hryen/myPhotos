@@ -1,13 +1,18 @@
 package web
 
 import (
+	"embed"
 	"github.com/gorilla/mux"
+	"io/fs"
 	"myPhotos/api"
 	"myPhotos/config"
 	"myPhotos/logger"
 	"net/http"
 	"os"
 )
+
+//go:embed static
+var static embed.FS
 
 func StartServer() {
 	logger.InfoLogger.Println("web server init...")
@@ -21,6 +26,10 @@ func StartServer() {
 	r.HandleFunc("/api/medias/{id}/thumbnail", api.GetMediaThumbnail).Methods(http.MethodGet)
 	r.HandleFunc("/api/medias/{id}/video", api.GetLivePhotoVideo).Methods(http.MethodGet)
 	r.HandleFunc("/api/medias/{id}/info", api.GetMediaInfo).Methods(http.MethodGet)
+
+	// frontend
+	staticFS, _ := fs.Sub(static, "static")
+	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.FS(staticFS))))
 
 	r.Use(mux.CORSMethodMiddleware(r))
 
