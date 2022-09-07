@@ -13,8 +13,9 @@ import (
 	"time"
 )
 
-func SaveMedia(metadata exiftool.FileMetadata, id string) {
+func SaveMedia(metadata exiftool.FileMetadata, id string, originalFilename string) {
 	m := convertToMedia(metadata)
+	m.OriginalFilename = originalFilename
 
 	// 获取地理位置
 	if config.GPSToGeo && m.GPSLongitude != "" && m.GPSLatitude != "" {

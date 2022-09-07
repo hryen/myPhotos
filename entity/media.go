@@ -14,15 +14,16 @@ type Media struct {
 	ID string `gorm:"primarykey"`
 
 	// basic info
-	MediaType  string
-	Path       string
-	FileType   string
-	FileSize   string
-	DateTime   time.Time
-	ImageSize  string
-	Make       string
-	Model      string
-	Megapixels string
+	MediaType        string
+	Path             string
+	OriginalFilename string
+	FileType         string
+	FileSize         string
+	DateTime         time.Time
+	ImageSize        string
+	Make             string
+	Model            string
+	Megapixels       string
 
 	GPSLongitude        string
 	GPSLatitude         string

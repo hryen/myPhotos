@@ -270,7 +270,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 
 	// save to db
 	fm := exiftool.Et.ExtractMetadata(dstPath)
-	services.SaveMedia(fm, id)
+	services.SaveMedia(fm, id, handler.Filename)
 
 	writeJSON(w, models.NewApiResponse(true, "Successfully Uploaded File", nil))
 }
