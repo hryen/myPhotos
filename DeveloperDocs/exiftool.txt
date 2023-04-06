@@ -1,0 +1,59 @@
+
+exiftool -d %Y-%m-%d_%H%M%S%%-c.%%e "-filename<datetimeoriginal" DIR
+
+动态图片用下面的命令，因为mp4文件没有 datetimeoriginal，而且mp4文件的小时需要+8
+exiftool -d %Y-%m-%d_%H%M%S%%-c.%%e "-filename<CreateDate" -ExtractEmbedded DIR 
+
+
+标签名加#显示原始数据
+例如 -GPSLongitude#
+
+标签：-FileSize -FileType -Make -Model -ISO -ExifVersion -DateTimeOriginal -Flash -FocalLength -MediaGroupUUID -WhiteBalance -Aperture -ImageSize -Megapixels -ShutterSpeed -GPSLatitude# -GPSLongitude#
+
+参数：-f -j -fast1
+
+-f		(-forcePrint)	Force printing of all specified tags
+-j[[+]=JSONFILE]	(-json)		Export/import tags in JSON format
+-fast[NUM]			Increase speed when extracting metadata
+
+例子（照片）：exiftool -f -j -fast1 -FileSize -FileType -Make -Model -ISO -ExifVersion -DateTimeOriginal -Flash -FocalLength -MediaGroupUUID -WhiteBalance -Aperture -ImageSize -Megapixels -ShutterSpeed -GPSLatitude# -GPSLongitude#
+
+[{
+  "SourceFile": "2018-05-29_140413.HEIC",
+  "FileSize": "1771 kB",
+  "FileType": "HEIC",
+  "Make": "Apple",
+  "Model": "iPhone 7 Plus",
+  "ISO": 20,
+  "ExifVersion": "0221",
+  "DateTimeOriginal": "2018:05:29 14:04:13",
+  "Flash": "Off, Did not fire",
+  "FocalLength": "4.0 mm",
+  "MediaGroupUUID": "7694CB80-38AE-477B-95B7-63EACA465BE3",
+  "WhiteBalance": "Auto",
+  "Aperture": 1.8,
+  "ImageSize": "4032x3024",
+  "Megapixels": 12.2,
+  "ShutterSpeed": "1/3195",
+  "GPSLatitude": 40.1614444444444,
+  "GPSLongitude": 116.622794444444
+}]
+
+
+
+例子（视频）：exiftool -f -j -fast1 -FileSize -FileType -Duration -Make -Model -CreationDate -ContentIdentifier -ImageSize -Megapixels -GPSLatitude# -GPSLongitude#
+
+[{
+  "SourceFile": "2018-05-29_140413.MP4",
+  "FileSize": "2.6 MB",
+  "FileType": "MP4",
+  "Duration": "2.20 s",
+  "Make": "Apple",
+  "Model": "iPhone 7 Plus",
+  "CreationDate": "2018:05:29 14:04:12+08:00",
+  "ContentIdentifier": "7694CB80-38AE-477B-95B7-63EACA465BE3",
+  "ImageSize": "1440x1080",
+  "Megapixels": 1.6,
+  "GPSLatitude": 40.1614,
+  "GPSLongitude": 116.6228
+}]

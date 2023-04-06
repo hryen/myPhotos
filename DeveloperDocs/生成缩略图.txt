@@ -1,0 +1,14 @@
+视频缩略图，resize 宽度自适应，高度256，保留纵横比：
+ffmpeg -ss 00:00:01.000 -i 1.mp4 -vframes:v 1 -vf "scale=-1:256" 1.jpg
+
+图片缩略图，resize 宽度自适应，高度256，保留纵横比：
+ffmpeg -i 1.jpg -vf "scale=-1:256" 11.jpg
+
+视频缩略图，带黑边：
+ffmpeg.exe -ss 00:00:01.000 -i 6.mov -vframes:v 1 -vf "scale=240:240:force_original_aspect_ratio=decrease,pad=240:240:(ow-iw)/2:(oh-ih)/2" 6.jpg
+
+视频缩略图，裁剪，不带黑边：
+ffmpeg.exe -ss 00:00:01.000 -i 2.mp4 -vframes:v 1 -vf "scale=240:240:force_original_aspect_ratio=increase,crop=240:240" 2.jpg
+
+参考：https://trac.ffmpeg.org/wiki/Scaling
+参考：https://superuser.com/questions/547296/resizing-videos-with-ffmpeg-avconv-to-fit-into-static-sized-player/1136305#1136305
